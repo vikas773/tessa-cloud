@@ -10,7 +10,6 @@ export default function Navbar() {
         <div className="nav-left">
           <div className="brand">
             <img src={logo} alt="Tessa Cloud Logo" className="brand-logo" />
-            <span className="brand-text">TESSA CLOUD</span>
           </div>
           
           <nav className="nav-links">

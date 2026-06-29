@@ -115,8 +115,9 @@ button, input, select {
 }
 
 .brand-logo {
-  height: 32px;
+  height: 45px;
   width: auto;
+  display: block;
   object-fit: contain;
 }
 
