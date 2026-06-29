@@ -119,7 +119,6 @@ button, input, select {
   width: auto;
   display: block;
   object-fit: contain;
-  filter: brightness(0);
 }
 
 .brand-text {
