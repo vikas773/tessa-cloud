@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { X, Save } from 'lucide-react';
 
-export default function CreatePlaceModal({ isOpen, onClose }) {
+export default function CreatePlaceModal({ isOpen, onClose, onSave }) {
   const [name, setName] = useState('');
   const [identifier, setIdentifier] = useState('');
+  const [location, setLocation] = useState('');
   const [status, setStatus] = useState('');
   const [errors, setErrors] = useState({});
 
@@ -16,6 +17,7 @@ export default function CreatePlaceModal({ isOpen, onClose }) {
     const newErrors = {};
     if (!name.trim()) newErrors.name = 'Place name is required';
     if (!identifier.trim()) newErrors.identifier = 'Identifier is required';
+    if (!location.trim()) newErrors.location = 'Location is required';
     if (!status) newErrors.status = 'Status is required';
 
     if (Object.keys(newErrors).length > 0) {
@@ -24,11 +26,15 @@ export default function CreatePlaceModal({ isOpen, onClose }) {
     }
 
     // Success flow (simulated save without backend database submission)
-    console.log('Place Form Validated & Submitted:', { name, identifier, status });
+    console.log('Place Form Validated & Submitted:', { name, identifier, location, status });
+    if (onSave) {
+      onSave({ name, identifier, location, status });
+    }
     
     // Clear fields
     setName('');
     setIdentifier('');
+    setLocation('');
     setStatus('');
     setErrors({});
     
@@ -83,6 +89,24 @@ export default function CreatePlaceModal({ isOpen, onClose }) {
               }}
             />
             {errors.identifier && <span className="error-message">{errors.identifier}</span>}
+          </div>
+
+          {/* Location Field */}
+          <div className="form-group">
+            <label className="form-label">
+              Location <span className="label-required">*</span>
+            </label>
+            <input 
+              type="text" 
+              placeholder="Enter location (e.g. Bangalore, India)"
+              className={`form-input ${errors.location ? 'error' : ''}`}
+              value={location}
+              onChange={(e) => {
+                setLocation(e.target.value);
+                if (errors.location) setErrors(prev => ({ ...prev, location: '' }));
+              }}
+            />
+            {errors.location && <span className="error-message">{errors.location}</span>}
           </div>
 
           {/* Status Field */}

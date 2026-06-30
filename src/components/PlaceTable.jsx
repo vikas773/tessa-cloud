@@ -9,7 +9,8 @@ export default function PlaceTable({ places }) {
   // Filter places based on search input
   const filteredPlaces = places.filter(place => 
     place.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    place.identifier.toLowerCase().includes(searchTerm.toLowerCase())
+    place.identifier.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    (place.location && place.location.toLowerCase().includes(searchTerm.toLowerCase()))
   );
 
   // Pagination calculation
@@ -64,6 +65,7 @@ export default function PlaceTable({ places }) {
               <th style={{ width: '80px' }}>#</th>
               <th>Place Name</th>
               <th>Identifier (Unique ID)</th>
+              <th>Location</th>
               <th>Status</th>
               <th>Created On</th>
               <th>Created By</th>
@@ -77,6 +79,7 @@ export default function PlaceTable({ places }) {
                   <td>{startIndex + idx + 1}</td>
                   <td style={{ fontWeight: '500', color: '#111827' }}>{place.name}</td>
                   <td>{place.identifier}</td>
+                  <td>{place.location || '—'}</td>
                   <td>
                     <span className={`badge ${place.status === 'Active' ? 'badge-active' : 'badge-inactive'}`}>
                       {place.status}
@@ -95,7 +98,7 @@ export default function PlaceTable({ places }) {
               ))
             ) : (
               <tr>
-                <td colSpan={7} style={{ textAlign: 'center', padding: '32px', color: '#9CA3AF' }}>
+                <td colSpan={8} style={{ textAlign: 'center', padding: '32px', color: '#9CA3AF' }}>
                   No places found matching the search criteria.
                 </td>
               </tr>
